@@ -19,66 +19,65 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Passing learned parameters to offspring can accelerate adaptation, but random controls may confound update direction with the structure, magnitude, and timing of hereditary change. We examine these distinctions in a resource-limited spatial artificial ecology with lifetime action-value learning and local reproduction. A state-preserving randomization retains each state's update mean and action-contrast norm. With 512 fixed-norm updates, directed inheritance establishes in 20 of 20 runs versus 18 of 20 under this control, with a paired capped-time advantage of 4,870 sweeps; weaker whole-table controls establish in only two and zero runs. Erasing newborn action preferences reduces directed attainment to six of 20, while faster newborn learning restores 20 of 20, supporting a relearning-related mechanism in that regime. Continuous proportional writeback retains a speed advantage under common step-size and parameter-range constraints. However, a population-wide update quota ends writeback at different times in the two evolving populations. At one energy allocation, replacing a 1,024-event cutoff with a common time cutoff changes the ranking, while also changing realized update amounts. A separate fixed-step experiment matches all 1,024 updates and their cumulative magnitudes: staged release improves directed mean occupancy by 8.25 percentage points, but no group reaches the prespecified establishment threshold. These findings support conditional benefits of inherited action preferences and expose the roles of control geometry, newborn expression, and update allocation. They do not establish a universal inheritance advantage, a pure timing mechanism, or increased long-term evolvability.
+How can populations of learning agents preserve useful experience when individuals die and are replaced? Inheriting learned behavior can reduce repeated learning, but identifying its benefit is difficult when inheritance also changes survival, reproduction, and subsequent hereditary updates. Even equal-magnitude random controls can distort comparisons by redistributing changes across states. We address this challenge in a resource-limited artificial ecology using state-preserving random controls, symmetric stability constraints, newborn preference interventions, and controlled update schedules. Under a 512-event fixed-norm budget, directed inheritance achieves sustained population establishment in 20 of 20 runs versus 18 of 20 for the state-preserving control, with a paired capped-time advantage of 4,870 sweeps. Erasing newborn action preferences reduces directed establishment to six of 20 runs; faster newborn learning restores 20 of 20, supporting a contribution from reduced relearning. Continuous proportional inheritance retains a speed advantage under common stability constraints. However, replacing an event quota with a shared time cutoff can reverse the ranking while also changing realized update amounts. In a separate experiment matching update count and cumulative magnitudes, staged allocation raises directed mean occupancy by 8.25 percentage points, although no group reaches the prespecified establishment threshold. These experiments identify conditional benefits of inherited preferences and show how control structure, newborn expression, and update allocation shape their measurement, providing a framework for evaluating inherited learning in artificial populations.
 \end{abstract}
 
 \section{Introduction}
-Learning and inheritance operate on different timescales. An individual can adjust its behavior during its lifetime, whereas reproduction initializes offspring that must act under their own local conditions. Directly retaining a parent's learned parameters offers an apparent shortcut, but its performance depends on what is retained, how offspring continue learning, and how behavior affects survival and reproduction. Demonstrating a benefit in one setting leaves its mechanism and range of applicability unresolved.
+Preserving useful experience across generations is a central design question for populations of learning agents whose members die and are replaced. Lifetime learning can improve an individual's behavior, yet a newborn must act before it has accumulated comparable experience. Passing learned parameters to offspring offers a way to retain that experience. In a population competing for limited resources, however, a better starting policy can also change who survives, when reproduction occurs, and which individuals contribute to later generations. Understanding the value of inheritance therefore requires connecting individual learning to population dynamics.
 
-These questions have a substantial history. Learning can guide evolution without direct transmission of acquired traits, as demonstrated in work on the Baldwin effect \cite{hinton1987}. Formal models also compare environmentally induced variation, random variation, and feedback from phenotype to inherited state \cite{rivoire2014}. In evolutionary robotics, inherited controllers have been compared with learning from scratch under different learning budgets \cite{jelisavcic2019}; subsequent work examines newborn performance and body--controller matching \cite{luo2023}. We therefore do not treat either direct writeback or reduced relearning as a new general principle.
+Learning and inheritance have long been studied together. Work on the Baldwin effect shows how learning can guide evolution without directly transmitting acquired traits \cite{hinton1987}, while formal models compare random variation, environmentally induced variation, and feedback from phenotype to inherited state \cite{rivoire2014}. Evolutionary robotics studies compare inherited controllers with learning from scratch under different learning budgets \cite{jelisavcic2019} and examine newborn performance and body--controller matching \cite{luo2023}. These precedents motivate our focus on how to identify and bound the benefit of inherited learning. Neither direct parameter writeback nor reduced offspring relearning is itself the proposed novelty.
 
-The present study asks a narrower experimental question: what remains of a directed inheritance benefit after the random control preserves the state structure of the learned change, and how does that benefit depend on newborn expression and continued hereditary updating? A random perturbation can have the same total Euclidean norm as a learned update while allocating its components to different states. If some represented states cannot be encountered, equal global norm need not mean comparable opportunity to influence behavior. Conversely, preserving the state support still does not make trajectories or accumulated learning identical after populations diverge.
+The experimental challenge is that an apparent inheritance advantage can reflect several coupled effects. First, a random perturbation with the same total Euclidean norm as a learned update can distribute change across different states, including states that cannot be encountered. Equal magnitude then does not imply comparable opportunity to influence behavior. Second, proportional directed writeback moves inherited parameters toward learned values, whereas a random rotation need not satisfy the same stability constraints. Third, reproduction determines opportunities for hereditary updating: populations given the same event quota can exhaust it at different times. A performance difference can consequently depend on update direction, the structure of the control, newborn behavior, and the allocation of subsequent updates.
 
-We investigate these distinctions in a deliberately simple artificial ecology. Individuals occupy a two-dimensional torus, choose among resting, harvesting, and dividing, and learn immediate local action values. Resource replenishment, action costs, stochastic mortality, and local reproduction determine population occupancy without an externally imposed population-level fitness selection operator. A hereditary table $g$ is separated from the lifetime table $\theta$. Reproduction can transmit part of $\theta-g$ to the child. The model is a computational testbed, not a calibrated account of biological cells.
+We ask which inheritance benefits survive controls for these factors, and which interventions weaken or alter them. Our testbed is a resource-limited spatial artificial ecology in which individuals occupy a two-dimensional torus, learn immediate local action values, and choose among resting, harvesting, and dividing. Resource replenishment, action costs, stochastic mortality, and local reproduction determine population occupancy without an externally imposed population-level fitness selection operator. A hereditary table $g$ initializes a lifetime table $\theta$, and reproduction can transmit part of the acquired change $\theta-g$. External ecological rules remain fixed within each run, while local resources and population composition evolve. This deliberately simple model allows controlled interventions; it is not a calibrated model of biological cells.
 
-Three initial experimental components provide complementary evidence. First, fixed-norm updates compare inherited direction with a state-preserving random alternative across update quotas. Second, a branch intervention removes newborn action preferences once the hereditary update quota is reached and tests whether faster lifetime learning compensates for their removal. Third, the original proportional update is evaluated with continuous writeback and with a finite update quota. The first component constrains variation magnitude; the second intervenes on expression; the third checks whether an observed benefit survives removal of the fixed-norm intervention. These components estimate distinct effects (Figure~\ref{fig:overview}). Follow-up experiments impose symmetric stability constraints and compare event quotas with common time cutoffs and fixed-budget release schedules.
+Our experiments address three aspects of the problem (Figure~\ref{fig:overview}). To test update direction, we compare fixed-norm inheritance with randomization that preserves each state's update mean and action-contrast norm, then examine proportional writeback under common step-size and parameter-range constraints. To test newborn expression, we erase newborn action preferences after the hereditary quota is exhausted and ask whether faster lifetime learning compensates for their removal. To test update allocation, we compare event quotas with shared time cutoffs and then compare release schedules with matched update counts and cumulative magnitudes. These interventions estimate distinct effects: matching candidate updates does not keep later trajectories identical, and shared stability constraints do not guarantee equal realized cumulative change.
 
-Our contribution is the resulting control and intervention analysis. Stronger random controls substantially reduce the observed gap in establishment frequency while retaining a speed advantage in several fixed-norm settings. Newborn preference erasure and learning-rate compensation support a relearning-related mechanism in the tested fixed-norm regime. Finally, continuous and quota-limited writeback can yield opposite rankings at the same energy allocation, but follow-up interventions show that this comparison depends on the allocation rule and its coupling to reproduction. A matched-budget timing experiment supports an occupancy effect without confirming its primary establishment prediction. This evidence bounds a model-specific benefit rather than demonstrating a new hereditary channel, an evolutionary phase transition, or a general increase in evolvability.
+The resulting evidence supports a conditional population benefit. Stronger random controls narrow the establishment-frequency gap while retaining a speed advantage in several fixed-norm settings. Newborn preference erasure and learning-rate compensation support a contribution from reduced relearning in the tested regime. Continuous proportional inheritance also retains a speed advantage under common stability constraints. However, changing the stopping rule can reverse the directed--random ranking while changing realized update amounts. With count and cumulative magnitudes matched, staged allocation improves directed mean occupancy by 8.25 percentage points, but no group meets the prespecified establishment threshold. Our contribution is a control and intervention framework that distinguishes these outcomes and bounds their interpretation. The experiments identify conditions shaping inherited-learning benefits in this ecology; they do not establish a universal advantage, a pure timing mechanism, or increased long-term evolvability.
 
-
-\begin{figure}[htbp]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[
   box/.style={draw=blue!45!black,rounded corners=3pt,fill=blue!4,
-    text width=3.85cm,minimum height=1.85cm,align=center,inner sep=7pt,font=\small},
-  test/.style={box,draw=teal!60!black,fill=teal!4,minimum height=2.05cm,font=\footnotesize},
-  flow/.style={-{Latex[length=2.2mm]},thick,draw=blue!60!black}]
-\node[box] (birth) at (0,0) {\textbf{Inherited initialization}\\[4pt]
+    text width=3.95cm,minimum height=1.25cm,align=center,inner sep=5pt,font=\footnotesize},
+  test/.style={box,draw=teal!60!black,fill=teal!4,minimum height=1.7cm,anchor=north},
+  flow/.style={-{Latex[length=1.8mm]},thick,draw=blue!60!black}]
+\node[box] (birth) at (0,0) {\textbf{Inherited initialization}\\[2pt]
 Hereditary table $g$\\Newborn values $\theta\leftarrow g$};
-\node[box] (learn) at (5,0) {\textbf{Lifetime learning}\\[4pt]
+\node[box] (learn) at (4.9,0) {\textbf{Lifetime learning}\\[2pt]
 Rest / harvest / divide\\$\Delta\theta_{s,a}=\eta(r-\theta_{s,a})$};
-\node[box] (child) at (10,0) {\textbf{Local reproduction}\\[4pt]
-Candidate $d=\lambda(\theta-g)$\\$g_{\rm child}=g_{\rm parent}+d$};
+\node[box] (child) at (9.8,0) {\textbf{Local reproduction}\\[2pt]
+$d=\lambda(\theta-g)$\\$g_{\rm child}=g_{\rm parent}+d$};
 \draw[flow] (birth.east)--(learn.west);
 \draw[flow] (learn.east)--(child.west);
-\draw[flow] (child.north)--++(0,.65)-|node[pos=.25,above,font=\footnotesize]{Next generation} (birth.north);
-\node[draw=gray!60,rounded corners,fill=gray!6,text width=13.85cm,minimum height=1.05cm,
- align=center,font=\small,inner sep=7pt] (eco) at (5,-2.3)
- {\textbf{Shared artificial ecology: 2D toroidal lattice}\\
- Local resources, energy costs, stochastic death, and energy-conserving birth};
+\draw[flow] (child.north)--++(0,.38)-|node[pos=.25,above,font=\footnotesize]{Next generation} (birth.north);
+\node[draw=gray!60,rounded corners,fill=gray!6,text width=13.75cm,
+ align=center,font=\footnotesize,inner sep=5pt] (eco) at (4.9,-1.55)
+ {\textbf{Shared ecology: 2D toroidal lattice}\\
+ Resources, energy costs, death, and reproduction};
 \draw[flow] (eco.north)--(learn.south);
-\node[font=\small\bfseries] at (5,-3.35) {Interventions that distinguish different explanations};
-\node[test] (geometry) at (0,-4.85)
- {\textbf{1. Update controls}\\[4pt]
-Directed vs. state-preserving random direction\\
-Matched candidate geometry; common stability constraints};
-\node[test] (expression) at (5,-4.85)
- {\textbf{2. Newborn expression}\\[4pt]
-Keep vs. erase action preferences\\
-Test compensation by faster newborn learning};
-\node[test] (allocation) at (10,-4.85)
- {\textbf{3. Update allocation}\\[4pt]
-Event quota vs. common time cutoff\\
-Equal fixed-step budget: earliest vs. staged release};
-\node[draw=gray!60,rounded corners,fill=gray!6,text width=13.85cm,
- minimum height=1.05cm,align=center,font=\small,inner sep=7pt] (measure) at (5,-7)
- {\textbf{Population outcomes and realized budgets}\\
-Establishment, occupancy, extinction; births, update counts, cumulative magnitudes};
+\node[test] (geometry) at (0,-2.35)
+ {\textbf{1. Update controls}\\[2pt]
+Directed vs. random\\
+State-preserving control\\
+Shared stability bounds};
+\node[test] (expression) at (4.9,-2.35)
+ {\textbf{2. Newborn preferences}\\[2pt]
+Keep vs. erase\\
+Faster-learning rescue};
+\node[test] (allocation) at (9.8,-2.35)
+ {\textbf{3. Update allocation}\\[2pt]
+Event vs. time cutoff\\
+Early vs. staged updates};
+\node[draw=gray!60,rounded corners,fill=gray!6,text width=13.75cm,
+ align=center,font=\footnotesize,inner sep=5pt] (measure) at (4.9,-4.85)
+ {\textbf{Outcomes and realized budgets}\\
+Establishment, occupancy, extinction; births and hereditary change};
 \draw[flow] (geometry.south)--(geometry.south |- measure.north);
 \draw[flow] (expression.south)--(measure.north);
 \draw[flow] (allocation.south)--(allocation.south |- measure.north);
 \end{tikzpicture}
-\caption{Study overview. Individuals learn local action values during life and can transmit acquired changes at reproduction. The upper row shows the unmodified proportional rule with $\mu=0$, as in the central experiments. Fixed-norm, random-direction, and bounded variants intervene on the transmitted increment. The three intervention families test control structure, newborn expression, and update allocation; they estimate distinct effects. Stopping new writeback leaves lifetime learning and inheritance of existing $g$ active. The schematic shows the experimental design, not a universal benefit or a proven mediation pathway.}
+\caption{Study overview. Lifetime learning can enter offspring initialization through proportional writeback (top; $\mu=0$ in the central experiments). Controls preserve state-wise update structure and impose shared stability bounds. Newborn interventions test preference expression and faster-learning rescue. Allocation experiments compare event and time cutoffs, then early and staged release with matched counts and cumulative magnitudes. These interventions estimate distinct effects. Stopping writeback preserves lifetime learning and inheritance of existing $g$.}
 \label{fig:overview}
 \end{figure}
 
@@ -347,13 +346,15 @@ Several limitations constrain transfer beyond this study. The ecology and learne
 The symmetric stability and allocation diagnostics narrow these alternatives without establishing a universal explanation. In particular, the matched-budget experiment did not confirm its primary prediction; a secondary occupancy effect should not be relabeled as faster establishment. Testing a prespecified mechanism in an independently implemented learner remains outside the core evidence presented here.
 
 \section{Conclusion}
-Inherited learning should be evaluated against controls that distinguish update direction from structure and magnitude. In the tested artificial ecology, this distinction reduces a large apparent attainment advantage to a more conditional speed benefit. Newborn preference erasure and learning-rate compensation support a role for repeated learning, while symmetric stability constraints retain continuous benefits and allocation diagnostics expose different benefit boundaries. Matched-budget staging affects occupancy but does not achieve establishment in the tested small-step regime. These results support a bounded mechanism study of inherited action preferences, not a general law of evolution or an unqualified advantage of acquired-trait inheritance.
+Inherited action preferences can help a population retain useful experience as individuals die and are replaced, but their population-level value depends on how that experience is expressed and transmitted. In our resource-limited artificial ecology, state-preserving random controls reduce a large apparent establishment advantage to a conditional speed benefit. Newborn preference erasure and compensation by faster learning support a contribution from reduced relearning, while continuous proportional inheritance retains a speed advantage under common stability constraints.
+
+The allocation of hereditary updates also shapes the measured benefit. Event quotas and shared time cutoffs can produce different rankings while changing realized update amounts. When update count and cumulative magnitudes are matched, staged release improves mean occupancy, but no group reaches the prespecified establishment threshold. Our contribution is a framework of controls and interventions for evaluating inherited learning: comparisons must account for update structure and stability, newborn expression, and the coupling between reproduction and update allocation. The evidence supports conditional benefits in this artificial ecology. Testing whether these distinctions predict outcomes in an independently implemented learning system is the next step toward broader applicability.
 
 \section*{Data and code availability}
 Code, protocols, formal seed-level results, population traces, summaries, and validation records are available at \url{https://github.com/deep-geo/inherited-learning-ecology}. Full per-event logs are retained separately and are available from the corresponding author on request. No permanent archive DOI has yet been assigned.
 
 \section*{Author declarations}
-Xuening Wu conceived and directed the study and prepared the manuscript. This research received no funding. The author declares no competing interests. The experiments are computational simulations, with no human participants, animals, or biological cell experiments. Responsibility for the scientific content rests with the author.
+We conceived and directed the study and prepared the manuscript. This research received no funding. We declare no competing interests. The experiments are computational simulations, with no human participants, animals, or biological cell experiments. We take responsibility for the scientific content.
 
 \appendix
 \section{Additional ecological outcomes}\label{app:robust}
@@ -377,7 +378,7 @@ no birth bonus & 20/20 & 2160/3560 & 0/0 & 0.931/0.881 \\
 \end{table}
 
 \section{Reproducibility and provenance}
-Codex, a generative AI tool, assisted with simulation code and execution, analysis, literature discovery, figures, and manuscript preparation. The author is responsible for the scientific content. The numerical and implementation checks described below document the validation performed; AI assistance is not independent verification.
+Codex, a generative AI tool, assisted with simulation code and execution, analysis, literature discovery, figures, and manuscript preparation. We are responsible for the scientific content. The numerical and implementation checks described below document the validation performed; AI assistance is not independent verification.
 
 Simulation code is written in C++17 with separate pseudorandom streams for ecological events, independent noise, direction generation, and measurements. Seeds and source snapshots are included per stage. Matched seeds align initial conditions and random-stream initialization, but do not enforce identical encounters after trajectories diverge. Source and protocol hashes were recorded by the experiment runners. Existing checks include population accounting, resource bounds, energy split conservation, geometry preservation, zero-learning and zero-writeback comparisons, and exact replay of representative outputs.
 
