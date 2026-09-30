@@ -1,6 +1,6 @@
 # Inherited Learning in an Artificial Ecology
 
-Reproducibility materials for **Inherited Action Preferences in a Resource-Limited Artificial Ecology: Controls, Relearning, and Update Allocation**, by Xuening Wu.
+We provide reproducibility materials for **Inherited Action Preferences in a Resource-Limited Artificial Ecology: Controls, Relearning, and Update Allocation**.
 
 This is a computational artificial ecology, not a biological cell experiment. Individuals learn action preferences and may transmit learned changes during local reproduction. The study distinguishes control geometry, newborn relearning, and allocation of hereditary updates. It does not establish a universal inheritance advantage, an evolutionary phase transition, or improved long-term evolvability.
 
@@ -52,4 +52,4 @@ Large per-event logs, compiled binaries, caches, stale PDFs, and upload archives
 
 ## Authorship and reuse
 
-Author: Xuening Wu. The manuscript describes AI assistance and author responsibility. This repository contains no claim of independent external validation. No open-source license has yet been selected; public availability alone does not grant an unrestricted reuse license. License selection is reserved for the author.
+We describe AI assistance in the manuscript and take responsibility for the scientific content. This repository contains no claim of independent external validation. No open-source license has yet been selected; public availability alone does not grant an unrestricted reuse license. We have not yet selected a license.
