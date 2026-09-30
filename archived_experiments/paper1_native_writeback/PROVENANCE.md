@@ -1,0 +1,5 @@
+# 来源
+
+由上一轮paper1_completion模拟器扩展，只增加mode7/8原始幅度写回、候选norm记录与凸组合公式审计。原输出目录未修改。旧sim.cpp SHA256: e5194a284a59ec8a5e1f50dc34f9aa8b0ca497071b0ff78b59d3bde8c7b0a2fa
+
+执行前方案和源码哈希见validation/*_run.json。本轮只用当前模型检验写回规则连接，不声称独立生态实现。

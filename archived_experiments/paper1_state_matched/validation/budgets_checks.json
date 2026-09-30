@@ -1,0 +1,9 @@
+{
+  "all_runs_complete": true,
+  "population_balance": true,
+  "energy_split_norm": true,
+  "row_matching": true,
+  "zero_unreachable_in_main_pair": true,
+  "budget_ledger": true,
+  "complete_metrics": true
+}

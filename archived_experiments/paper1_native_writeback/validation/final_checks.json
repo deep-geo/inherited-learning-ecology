@@ -1,0 +1,8 @@
+{
+  "implementation_checks": true,
+  "development_checks": true,
+  "confirmation_checks": true,
+  "same_frozen_hashes": true,
+  "two_exact_replays": true,
+  "same_pre_cap_update_histories": true
+}

@@ -1,0 +1,6 @@
+{
+  "native_seven_outputs_exact": true,
+  "development_bounds_and_geometry": true,
+  "lambda0_exact": true,
+  "eta0_exact": true
+}

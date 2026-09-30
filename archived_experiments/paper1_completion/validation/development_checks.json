@@ -1,0 +1,12 @@
+{
+  "complete": true,
+  "frozen_hashes": true,
+  "population_balance": true,
+  "energy_split_norm": true,
+  "row_matching": true,
+  "unreachable_zero": true,
+  "budget_ledger": true,
+  "complete_metrics": true,
+  "intervention_ledger": true,
+  "pre_intervention_prefix": true
+}

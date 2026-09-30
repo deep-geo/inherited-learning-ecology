@@ -1,0 +1,10 @@
+# 来源与版本
+
+模拟器由paper1_state_matched审计版本扩展，原目录未改动。新增编译期4/8分箱、预算后新生个体表现型干预和学习率、干预账；逐状态旋转泛化到两个维数。不是独立实现。
+
+旧源码SHA256：
+- sim.cpp: 53d82268caf66b529108ea99deef236ecb0e9c570a3f82a9cecab4675c76df28
+- rotation.hpp: 8a37c8ace7a456bb66c1df1c34e6dfdc0cc5ebf92f0f325c18e77147fa5f9eed
+- local_rule.hpp: b3cb97ad02b1fa80b938c1935b931f8587f550ebcb20c45f0ba604424660611e
+
+执行前协议及模拟文件哈希见validation/*_run.json。新代码与旧程序/无操作干预的精确输出等价结果见baseline_equivalence.json。开发与正式代码/协议哈希一致；报告及分析代码不控制生态过程。

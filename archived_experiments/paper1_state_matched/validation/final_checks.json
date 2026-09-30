@@ -1,0 +1,11 @@
+{
+  "development": true,
+  "confirmation": true,
+  "budgets": true,
+  "replay": true,
+  "frozen_hashes_unchanged": true,
+  "budget_shared_prefix": true,
+  "main_pair_all_quotas_used": true,
+  "zero_signal_skips_absent": true,
+  "main_pair_unreachable_zero": true
+}

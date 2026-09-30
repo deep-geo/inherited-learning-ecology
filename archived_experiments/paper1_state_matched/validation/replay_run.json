@@ -1,0 +1,34 @@
+{
+  "stage": "replay",
+  "start_utc": "2026-09-28T15:19:05.019322+00:00",
+  "hashes": {
+    "sim.cpp": "53d82268caf66b529108ea99deef236ecb0e9c570a3f82a9cecab4675c76df28",
+    "rotation.hpp": "8a37c8ace7a456bb66c1df1c34e6dfdc0cc5ebf92f0f325c18e77147fa5f9eed",
+    "local_rule.hpp": "b3cb97ad02b1fa80b938c1935b931f8587f550ebcb20c45f0ba604424660611e",
+    "PROTOCOL.md": "89d4b2d1a272a9aabf3583d015fabf744812ef53c4adc7420cd6cbad424f0d64"
+  },
+  "runs": [
+    {
+      "seed": 52000,
+      "condition": "aligned_q",
+      "budget": 512,
+      "prefix": "b512_aligned_q_52000",
+      "q": 0.1841261006694567,
+      "exit_code": 0,
+      "elapsed_seconds": 1.3736387499375269,
+      "stderr": ""
+    },
+    {
+      "seed": 52000,
+      "condition": "state_rotated_q",
+      "budget": 512,
+      "prefix": "b512_state_rotated_q_52000",
+      "q": 0.1841261006694567,
+      "exit_code": 0,
+      "elapsed_seconds": 1.827942332951352,
+      "stderr": ""
+    }
+  ],
+  "end_utc": "2026-09-28T15:19:06.849553+00:00",
+  "elapsed_seconds": 1.829853666946292
+}

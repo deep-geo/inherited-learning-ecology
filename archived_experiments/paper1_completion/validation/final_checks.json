@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "development": true,
+    "representation": true,
+    "mechanism": true,
+    "robustness": true,
+    "all_execution_hashes_identical": true,
+    "original_and_sham_exact": true,
+    "local_gates_and_rotation": true,
+    "same_pre_cap_histories": true,
+    "three_exact_replays": true
+  },
+  "observations": {
+    "all_main_budgets_used": false,
+    "no_zero_signal_skip": true
+  }
+}

@@ -1,0 +1,1 @@
+This is an archived source and validation snapshot. For new simulation runs, copy it to a fresh directory and move the archived validation folder aside before running. Source scripts deliberately reject existing run logs. Compile the simulator as documented in README.md. Full original event logs are not in this compact bundle.

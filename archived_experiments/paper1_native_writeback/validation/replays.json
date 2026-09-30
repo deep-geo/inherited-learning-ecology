@@ -1,0 +1,46 @@
+[
+  {
+    "job": {
+      "seed": 81000,
+      "fraction": 0.5,
+      "cap": -1,
+      "lam": 1,
+      "method": "aligned",
+      "prefix": "0004_aligned_81000",
+      "exit_code": 0,
+      "seconds": 1.82450141699519,
+      "stderr": ""
+    },
+    "exact": {
+      "metrics.csv": true,
+      "updates.csv": true,
+      "lifetimes.csv": true,
+      "learning.csv": true,
+      "audit.json": true,
+      "interventions.csv": true,
+      "birth_probes.csv": true
+    }
+  },
+  {
+    "job": {
+      "seed": 81000,
+      "fraction": 0.65,
+      "cap": 1024,
+      "lam": 0.5,
+      "method": "state_rotated",
+      "prefix": "0022_state_rotated_81000",
+      "exit_code": 0,
+      "seconds": 2.1438945829868317,
+      "stderr": ""
+    },
+    "exact": {
+      "metrics.csv": true,
+      "updates.csv": true,
+      "lifetimes.csv": true,
+      "learning.csv": true,
+      "audit.json": true,
+      "interventions.csv": true,
+      "birth_probes.csv": true
+    }
+  }
+]

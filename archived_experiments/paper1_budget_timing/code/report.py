@@ -1,0 +1,17 @@
+from pathlib import Path
+import pandas as pd
+R=Path(__file__).resolve().parents[1]
+s=pd.read_csv(R/'summary.csv');d=pd.read_csv(R/'run_summary.csv');i=pd.read_csv(R/'interaction_effects.csv')
+labels={'earliest':'尽早释放全部额度','staged':'分8批释放至750'}
+p=s.copy();p['regime']=p.regime.map(labels);p['mode']=p['mode'].map({7:'定向',8:'随机'})
+p=p.rename(columns={'regime':'分配方式','mode':'方向','n':'种子数','time':'封顶建立时间','reached':'建立数','extinct':'灭绝数','auc':'全程占位AUC','late':'最后五点占位','updates':'实际写回次数','sum_norm':'累计L2','sum_sq':'累计平方量','births':'总出生数','cutoff':'用完额度时刻'})
+html='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>同额度分配时机诊断</title><style>body{max-width:1120px;margin:40px auto;padding:0 24px;font:17px/1.7 system-ui;color:#243341}table{border-collapse:collapse;font-size:14px;width:100%}td,th{border-bottom:1px solid #ccd6dd;padding:8px;text-align:right}td:first-child,th:first-child{text-align:left}img{width:100%}.scroll{overflow-x:auto}</style><h1>同额度、不同释放时机：小型诊断</h1><p>2026-09-30 · 80/80条完成 · 20个配对种子 · 预先冻结方案</p><h2>Material Passport</h2><p>本地计算模拟。种子104000–104019；开发种子105000不入正式统计。条件基于旧数据选择，时间表和指标在正式批次前冻结；没有修改论文。</p><h2>实验问题</h2><p>相同的1,024次额度，尽早使用或分批释放到750 sweep，是否改变建立表现？比较定向写回与逐状态保均值/范数的随机旋转；共同参数范围[-.62,.42]。环境和学习设置沿用上一轮。</p><p>这次将学习差归一化为每次L2=.02，是新的固定范数干预，并非原始自然幅度写回的直接复现。若同父代任一候选不能在共同范围内保持该幅度，双方共同跳过、不扣次数。时间表是额度释放而非强迫更新：在内部时间0、107、214、321、429、536、643、750各释放128次；余额可结转至20000，最后一批自第751 sweep可用。</p><h2>结果</h2>'''
+html+=p[['分配方式','方向','建立数','封顶建立时间','全程占位AUC','最后五点占位','灭绝数']].to_html(index=False,float_format=lambda x:f'{x:.4f}',border=0)
+html+='<p>连续五个200-sweep采样点占位≥95%视为建立，记录首个时刻；未建立者保留并记20000。这不是未建立者的真实事件时间，封顶并列不能解释为等效。</p>'
+html+='<img src="occupancy.png" alt="两分配制度的全程占位曲线">'
+html+='<h2>实际预算</h2><div class="scroll">'+p[['分配方式','方向','实际写回次数','累计L2','累计平方量','用完额度时刻','总出生数']].to_html(index=False,float_format=lambda x:f'{x:.4f}',border=0)+'</div>'
+html+=f'<p>实际用满1,024次：{int((d.updates==1024).sum())}/80条。未用满者全部保留。达到1024次时，预期累计L2=20.48、累计平方量=.4096；均以原始日志实际值核验。用完额度时刻−1代表至运行结束仍未用完。逐运行表中skipped包括额度尚未释放、范围不可行及零信号造成的跳过，不是纯范围拒绝次数。</p>'
+html+='<h2>预定效应</h2><p>下表正值表示分批改善：时间为尽早−分批，其余为分批−尽早；direction_interaction为定向改善减随机改善。所有区间均是20种子配对bootstrap、20000次抽样的描述性95%区间，未做多重比较校正。</p>'+i.to_html(index=False,float_format=lambda x:f'{x:.5f}',border=0)
+html+='<img src="outcomes_budget.png" alt="建立时间与实际次数">'
+html+='''<h2>解释边界</h2><p id="interpretation">预定主要预测未得到支持：四组均0/20建立，全部封顶20000，因此既不能宣称分批加快建立，也不能将封顶并列称为等效。次要指标显示：定向全程平均占位从.6786增至.7611，改善.08249（8.25个百分点），描述性95%区间[.07842,.08664]；随机改善.00376，区间[-.02953,.03276]。方向交互为.07873 [.05031,.11112]。最后五采样点也显示定向改善约9.09个百分点、随机约1.99个百分点。全部80条实际次数及累计幅度匹配，故这些占位差不能用额外累计更新量解释；但仍涉及状态覆盖、时机、选择与可行性，不能称为纯时间机制。最稳妥结论是：在此固定小幅度干预下，分配时机改变了定向继承的占位收益，却不足以使种群建立。保持其为次要机制支持，不将次要指标升级为主要成功。建议到此结束本轮机制扩展，整合到可靠arXiv版本；不据此寻找新的更有利幅度或阈值。</p><p>即使实际次数和累计幅度一致，出生时机、父代学习信号、更新状态分布、几何可行性与种群选择仍会随历史变化；本实验估计两种分配策略的总体效果，不是单次更新时机的受控直接效应。也不能将固定范数结果外推回自然幅度规则或其他资源/寿命/学习器。</p><h2>验证</h2><p>默认新增选项关闭时与前一模拟器逐文件一致；零学习时两方向轨迹一致；开发检查和正式账本验证更新不超过已释放额度，接受步长为.02，累计范数和平方量与事件日志相符，出生死亡账本、能量、共同范围、候选几何及零支持一致。正式代码和方案哈希未变。</p><p>无中途扩样、失败删种子、成功者条件均值或事后指标替换。20独立种子形成80条配对轨迹，不当作80个独立样本。曲线区间是逐时间点bootstrap区间，不是全曲线同时区间。未检出优势不是等效证明；本轮不开展进一步参数搜索。</p><h2>文件</h2><p><a href="PROTOCOL.md">冻结方案</a> · <a href="run_summary.csv">逐运行结果</a> · <a href="interaction_effects.csv">配对效应</a> · <a href="analysis_bundle.zip">代码与分析包</a> · <a href="raw_results.zip">原始日志</a></p></html>'''
+(R/'report.html').write_text(html)

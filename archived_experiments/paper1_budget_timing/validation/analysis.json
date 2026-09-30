@@ -1,0 +1,11 @@
+{
+  "runs": 80,
+  "independent_seeds": 20,
+  "frozen_hashes": true,
+  "ledger": true,
+  "bounds": true,
+  "geometry": true,
+  "cutoff_logic": true,
+  "fixed_step": true,
+  "release_schedule": true
+}

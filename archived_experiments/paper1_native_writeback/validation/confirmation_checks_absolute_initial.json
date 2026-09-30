@@ -1,0 +1,11 @@
+{
+  "complete": true,
+  "frozen_hashes": true,
+  "population_balance": true,
+  "energy_split": true,
+  "native_norm": true,
+  "row_geometry": false,
+  "budget_ledger": true,
+  "complete_metrics": true,
+  "formula": true
+}

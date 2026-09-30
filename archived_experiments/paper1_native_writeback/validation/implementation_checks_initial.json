@@ -1,0 +1,20 @@
+{
+  "original_metrics.csv": true,
+  "original_lifetimes.csv": true,
+  "original_learning.csv": true,
+  "new_q_invariant_metrics.csv": true,
+  "new_q_invariant_updates.csv": true,
+  "new_q_invariant_lifetimes.csv": true,
+  "new_q_invariant_learning.csv": true,
+  "rand_q_invariant_metrics.csv": true,
+  "rand_q_invariant_updates.csv": true,
+  "rand_q_invariant_lifetimes.csv": true,
+  "rand_q_invariant_learning.csv": true,
+  "negative_zeror": true,
+  "negative_noa": false,
+  "negative_nor": false,
+  "new_geometry": true,
+  "new_native_norm": true,
+  "rand_geometry": true,
+  "rand_native_norm": true
+}

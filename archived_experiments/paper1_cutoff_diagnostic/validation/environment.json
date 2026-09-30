@@ -1,0 +1,9 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.0",
+  "numpy": "2.2.6",
+  "pandas": "3.0.3",
+  "matplotlib": "3.10.6",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "build": "c++ -O3 -std=c++17 code/sim.cpp -o code/sim"
+}

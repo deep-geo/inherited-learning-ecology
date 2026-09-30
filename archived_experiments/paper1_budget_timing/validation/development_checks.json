@@ -1,0 +1,7 @@
+{
+  "backward_exact": true,
+  "zero_learning_exact": true,
+  "release_quota": true,
+  "fixed_step": true,
+  "bounds": true
+}

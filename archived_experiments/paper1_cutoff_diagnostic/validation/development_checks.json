@@ -1,0 +1,6 @@
+{
+  "backward_exact": true,
+  "zero_cutoff_directions_exact": true,
+  "prefix_exact": true,
+  "post_cutoff_zero": true
+}

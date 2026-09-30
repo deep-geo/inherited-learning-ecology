@@ -1,0 +1,12 @@
+{
+  "runs": 1200,
+  "seed_units": 20,
+  "frozen": true,
+  "population_and_budget_ledger": true,
+  "energy": true,
+  "zero_unreachable": true,
+  "paired_geometry_max": 8.326672684688674e-17,
+  "paired_norm_max": 1.1102230246251565e-16,
+  "bounds": true,
+  "finite_updates": true
+}

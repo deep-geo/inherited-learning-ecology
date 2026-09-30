@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+raw/
+code/sim
+code/sim4
+code/sim8
+code/test_pair
+code/test_rotation
+code/test
+reproduced_figures/

@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "0174_state_rotated_81006": true
+  },
+  "records": [
+    {
+      "prefix": "0174_state_rotated_81006",
+      "per_row_relative_assertions": true,
+      "tolerance_multiple_of_machine_epsilon": 256,
+      "exact": {
+        "metrics.csv": true,
+        "updates.csv": true,
+        "lifetimes.csv": true,
+        "learning.csv": true,
+        "audit.json": true,
+        "interventions.csv": true,
+        "birth_probes.csv": true
+      }
+    }
+  ]
+}

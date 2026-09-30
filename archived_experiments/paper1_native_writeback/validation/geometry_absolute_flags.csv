@@ -1,0 +1,2 @@
+seed,fraction,cap,lam,method,prefix,exit_code,seconds,stderr,max_norm,row_norm_error
+81006,0.65,-1,1,state_rotated,0174_state_rotated_81006,0,1.975944917066954,,1664.4783986733034,4.656612873077393e-10

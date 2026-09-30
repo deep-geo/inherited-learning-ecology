@@ -1,0 +1,86 @@
+[
+  {
+    "stage": "representation",
+    "job": {
+      "seed": 61000,
+      "bins": 4,
+      "budget": 512,
+      "method": "aligned",
+      "setting": "baseline",
+      "mortality": 0.002,
+      "fraction": 0.5,
+      "bonus": 0.2,
+      "intervention": 0,
+      "child_eta": 0.2,
+      "prefix": "0005_aligned_61000",
+      "exit_code": 0,
+      "seconds": 0.8740764999529347,
+      "stderr": ""
+    },
+    "exact": {
+      "metrics.csv": true,
+      "lifetimes.csv": true,
+      "learning.csv": true,
+      "updates.csv": true,
+      "interventions.csv": true,
+      "audit.json": true,
+      "birth_probes.csv": true
+    }
+  },
+  {
+    "stage": "mechanism",
+    "job": {
+      "seed": 62000,
+      "bins": 8,
+      "budget": 512,
+      "method": "state_rotated",
+      "setting": "baseline",
+      "mortality": 0.002,
+      "fraction": 0.5,
+      "bonus": 0.2,
+      "intervention": 2,
+      "child_eta": 0.2,
+      "prefix": "0010_state_rotated_62000",
+      "exit_code": 0,
+      "seconds": 1.3994889580644667,
+      "stderr": ""
+    },
+    "exact": {
+      "metrics.csv": true,
+      "lifetimes.csv": true,
+      "learning.csv": true,
+      "updates.csv": true,
+      "interventions.csv": true,
+      "audit.json": true,
+      "birth_probes.csv": true
+    }
+  },
+  {
+    "stage": "robustness",
+    "job": {
+      "seed": 63000,
+      "bins": 8,
+      "budget": 1024,
+      "method": "aligned",
+      "setting": "no_birth_bonus",
+      "mortality": 0.002,
+      "fraction": 0.5,
+      "bonus": 0,
+      "intervention": 0,
+      "child_eta": 0.2,
+      "prefix": "0015_aligned_63000",
+      "exit_code": 0,
+      "seconds": 1.2468446670100093,
+      "stderr": ""
+    },
+    "exact": {
+      "metrics.csv": true,
+      "lifetimes.csv": true,
+      "learning.csv": true,
+      "updates.csv": true,
+      "interventions.csv": true,
+      "audit.json": true,
+      "birth_probes.csv": true
+    }
+  }
+]
